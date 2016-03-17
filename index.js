@@ -2,7 +2,7 @@ var fs = require('fs')
 var http = require('http')
 
 function readHtml(callback) {
-  fs.readFile("./index.html", "utf8", function read(err, content) {
+  fs.readFile("index.html", function read(err, content) {
     if (err) return callback(err)
     callback(null, content)
   })
