@@ -1,9 +1,16 @@
-var http = require('http');
-var requestListener = function (req, res) {
-  res.writeHead(200);
-  res.end('Hello, World!\n');
-}
+var fs = require('fs')
+var app = fs()
 
-var server = http.createServer(requestListener);
-server.listen(8080);
+/* serves all the static files*/
+app.set('port', (process.env.PORT || 8080))
+app.use(fs.static(__dirname + '/public'))
+
+/*serves main page*/
+app.get('/', function(request, fs) {
+fs.readfileSync('index.html')
+})
+
+app.listen(port, function() {
+  console.log("Node app is running at localhost:" + port)
+})
 
