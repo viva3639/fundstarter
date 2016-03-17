@@ -7,7 +7,7 @@ app.use(express.static(__dirname + '/public'))
 
 /*serves main page*/
 app.get('/', function(request, response) {
-response.sendFile('index.html') 
+response.sendfile('index.html') 
 })
 
 app.listen(app.get('port'), function() {
