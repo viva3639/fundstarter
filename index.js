@@ -1,4 +1,5 @@
 var fs = require('fs')
+var http = require('http')
 
 function readHtml(callback) {
   fs.readFile("./index.html", "utf8", function read(err, content) {
