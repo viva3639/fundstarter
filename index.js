@@ -8,6 +8,15 @@ function readHtml(callback) {
 }
 
 readHtml(function(err, content) {
-   console.log(content)
+   return content
 })
+
+function onRequest(request, response) {
+  response.writeHead(200, {"Content-Type": "html"})
+
+  response.write(readHtml)
+  response.end()
+}
+
+http.createServer(onRequest).listen(process.env.PORT || 8080)
 
