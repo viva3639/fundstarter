@@ -9,15 +9,11 @@ function readHtml(callback) {
 }
 
 readHtml(function(err, content) {
-   return content
-})
-
-function onRequest(request, response) {
   response.writeHead(200, {"Content-Type": "html"})
 
-  response.write(readHtml)
+  response.write(content)
   response.end()
-}
+})
 
-http.createServer(onRequest).listen(process.env.PORT || 8080)
 
+http.createServer(readHtml).listen(process.env.PORT || 8080)
