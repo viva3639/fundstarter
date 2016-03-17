@@ -7,7 +7,13 @@ app.use(express.static(__dirname + '/public'))
 
 /*serves main page*/
 app.get('/', function(request, response) {
-response.sendfile('index.html') 
+/*response.sendfile('index.html') */
+
+response.readFile(filename, "utf8", function(err, data) {
+        if (err) throw err;
+        resp.write(data);
+        resp.end();
+    });
 })
 
 app.listen(app.get('port'), function() {
