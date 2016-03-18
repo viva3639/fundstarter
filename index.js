@@ -1,19 +1,24 @@
-var fs = require('fs')
-var http = require('http')
+var fs = require("fs")
+var buf = new Buffer(2490)
 
-function readHtml(callback) {
-  fs.readFile("index.html", "utf8", function read(err, content) {
-    if (err) return callback(err)
-    callback(null, content)
-  })
-}
-
-readHtml(function(err, content) {
-  function onRequest(request, response) {
-    response.writeHead(200, {"Content-Type": "html"})
-    response.write(content)
-    response.end()
-  }
-  http.createServer(onRequest).listen(process.env.PORT || 8080)
+fs.open('index.html', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err)
+   }   
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err)
+      }      
+      if(bytes > 0){
+         
+         function onRequest(request, response) {
+           response.writeHead(200, {"Content-Type": "html"})
+           response.write(buf.slice(0, bytes))
+           response.end()
+         }
+         http.createServer(onRequest).listen(process.env.PORT || 8080)
+      }
+   })
 })
+
 
