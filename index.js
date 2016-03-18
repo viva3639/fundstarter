@@ -1,10 +1,17 @@
 var fs = require('fs')
 var http = require('http')
+var buf = new Buffer(2490);
 
 function readHtml(callback) {
-  fs.readFile("index.html", "utf8", function (err, content) {
+  fs.open("index.html", 'r+', function(err, fd)       
+  {
     if (err) return callback(err)
-    callback(null, content)
+    
+    fs.read(fd, buf, 0, buf.length, 0, function(err, bytes)
+    {
+       if (err) return callback(err)
+       callback(null, buf.slice(0, bytes))         
+    })
   })
 }
 
@@ -16,3 +23,4 @@ readHtml(function(err, content) {
   }
   http.createServer(onRequest).listen(process.env.PORT || 8080)
 })
+
